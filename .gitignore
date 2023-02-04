@@ -6,6 +6,7 @@
 
 # <-- Start : Please remove this file -->
 **/*
+!README.md
 !.env.sample
 !.gitignore
 !docker-compose.yml
