@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: localDockerfile
+     # tmp/pids/server.pidが残ってたら `A server is already running. ~~` のエラーでrailsを起動できないので事前に消してから、`rails sever` する
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s"
+    # 上記のdbイメージで指定したユーザー名とパスワードをrails側でも指定するため環境変数に設定。
+    env_file:
+      - .env
+    # ホストのカレントディレクトリ(.)とイメージ内の/myappディレクトリを同期させている
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    tty: true # 疑似ターミナル (pseudo-TTY) を割り当て。https://docs.docker.jp/compose/compose-file/index.html#tty
+    stdin_open: true # サービス コンテナに標準入力を割り当てて実行するよう設定(https://docs.docker.jp/compose/compose-file/index.html#stdin-open)。
+    depends_on:
+      - db
+  db:
+    image: postgres
+    env_file:
+      - .env
+    volumes:
+      - postgres_volume:/var/lib/postgressql/data
+
+volumes:
+  postgres_volume:
