@@ -1,24 +1,87 @@
-# README
+# Rails + postgres + docker-compose テンプレ
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 概要
+localでRailsを立ち上げるテンプレ用Git Repositoryを作成した。
 
-Things you may want to cover:
 
-* Ruby version
+## セットアップ方法
 
-* System dependencies
+全体のセットアップ方法について記載。以下の流れで行う。
 
-* Configuration
+1. リポジトリのクローン
+2. 一部ファイルを編集
+3. docker上でのrailsのインストール
+4. DBのセットアップ
 
-* Database creation
+### cloneする
 
-* Database initialization
+```sh
 
-* How to run the test suite
+git clone git@github.com:arch-yamasaki/rails-template.git
+cd rails-template
 
-* Services (job queues, cache servers, search engines, etc.)
+```
 
-* Deployment instructions
 
-* ...
+### ファイルの編集
+
+
+- `Gemfile.sample`の名前を`Gemfile`に変更
+- `.gitignore`の以下の部分を消す。
+
+```txt
+
+# <-- Start : Please remove this file -->
+**/*
+!.env.sample
+!.gitignore
+!docker-compose.yml
+!*Dockerfile*
+!Gemfile
+# <-- End -->
+
+```
+
+
+### railsのセットアップ
+
+```sh
+# イメージを作成
+docker-compose build
+# rails含む各種Gemをbundleでinstallする
+docker-compose run web rails new . --force  --skip-git --database=postgresql 
+
+# 他のinstall方法
+# docker-compose run web rails new . cat-hotwire --css=bootstrap --skip-jbuilder --skip-action-mailbox --skip-action-mailer --skip-test --skip-active-storage --skip-action-text --skip-git --database=postgresql
+
+# Gemfileが再作成されるのでbuildしなおす。
+docker-compose build
+
+```
+
+### DBのセットアップ
+
+```yml:database.yml
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: myapp_development
+  host: db
+  username: <%= ENV["POSTGRES_USER"] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>
+
+```
+
+```sh
+
+# dbを作成する
+docker-compose run web rake db:create
+
+# runさせる
+docker-compose up
+```
+
