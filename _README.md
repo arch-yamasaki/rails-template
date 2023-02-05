@@ -7,19 +7,26 @@ localでRailsを立ち上げるテンプレ用Git Repositoryを作成した。
 ## セットアップ方法
 
 全体のセットアップ方法について記載。以下の流れで行う。
-1. repositoryのクローン
+
+1. リポジトリのクローン
 2. 一部ファイルを編集
-3. docker上でのrailsのセットアップ
+3. docker上でのrailsのインストール
 4. DBのセットアップ
 
 ### cloneする
 
+```sh
+
+git clone git@github.com:arch-yamasaki/rails-template.git
 cd rails-template
 
+```
 
 
 ### ファイルの編集
 
+
+- `Gemfile.sample`の名前を`Gemfile`に変更
 - `.gitignore`の以下の部分を消す。
 
 ```txt
@@ -35,9 +42,6 @@ cd rails-template
 
 ```
 
-- Gemfile.sample
-
-`Gemfile.sample`から`Gemfile`に変更
 
 ### railsのセットアップ
 
