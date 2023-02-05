@@ -23,8 +23,8 @@ services:
     image: postgres
     env_file:
       - .env
-    volumes:
-      - postgres_volume:/var/lib/postgressql/data
+    volumes: # ローカルdbを永続化させるために必要
+      - postgres_volume:/var/lib/postgresql/data
 
 volumes:
   postgres_volume:

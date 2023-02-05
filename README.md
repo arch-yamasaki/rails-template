@@ -1,49 +1,24 @@
-# Rails + postgres + docker-compose テンプレ
+# README
 
-## 概要
-localでRailsを立ち上げるテンプレ
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-## セットアップ方法
+Things you may want to cover:
 
+* Ruby version
 
-### cloneする
+* System dependencies
 
-cd rails-template
+* Configuration
 
+* Database creation
 
-###
+* Database initialization
 
-### ファイルの編集
+* How to run the test suite
 
-- `.gitignore`の以下の部分を消す。
+* Services (job queues, cache servers, search engines, etc.)
 
-```txt
+* Deployment instructions
 
-# <-- Start : Please remove this file -->
-**/*
-!.env.sample
-!.gitignore
-!docker-compose.yml
-!*Dockerfile*
-!Gemfile
-# <-- End -->
-
-```
-
-- Gemfile.sample
-
-`Gemfile.sample`から`Gemfile`に変更
-
-### railsのセットアップ
-
-```sh
-# イメージを作成
-docker-compose build
-# rails含む各種Gemをbundleでinstallする
-docker-compose run web bundle install --path vendor/bundle
-# dbを作成
-docker-compose exec web rails db:create
-# rails runする
-docker-compose exec web rails s
-
-```
+* ...

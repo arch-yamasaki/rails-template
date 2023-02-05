@@ -12,7 +12,9 @@ WORKDIR ${HOMEDIR}
 # -- いらないんじゃないか start
 # ADD Gemfile ${HOMEDIR}/Gemfile
 # ADD Gemfile.lock /${HOMEDIR}/Gemfile.lock
-# RUN bundle install --path vendor/bundle
+# RUN bundle config set path 'vendor/bundle'
+# RUN bundle binstubs --path=vendor/bin
+# RUN bundle install
 # -- end
 
 ADD . ${HOMEDIR}
