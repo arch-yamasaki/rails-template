@@ -42,7 +42,6 @@ cd rails-template
 
 ```
 
-
 ### 3. railsのセットアップ
 
 ```sh
@@ -50,21 +49,32 @@ cd rails-template
 docker-compose build
 
 # rails含む各種Gemをisntallする
-docker-compose run web rails new . <your_app_name> \
-  --database=postgresql \ # postgresqlを仕様
-  --css=bootstrap \ # 今回はbootstrapを使う。使いたいcssによって適宜変えて下さい。
-  --skip-git \　# .gitignoreはすでにあるもの使用すればいいのでskipで。
-  --skip-jbuilder \ # jsonで返す必要ないならいらない。必要になったら後で入れる
-  --skip-action-mailbox \　# メール処理機能必要ないことのほうが多そう。
-  --skip-action-mailer \ # 同様。
-  --skip-test　\　# rspec使う場合はtestをskip
-  --skip-action-text # action textも必要なアプリ限られるはずなので一旦skip。
+docker-compose run web rails new . rails_twitter \
+  --database=postgresql \
+  --css=bootstrap \
+  --skip-git \
+  --skip-jbuilder \
+  --skip-action-mailbox \
+  --skip-action-mailer \
+  --skip-test　\　
+  --skip-action-text 
 
 
 # Gemfileが再作成されるのでbuildしなおす。
 docker-compose build
 
 ```
+
+CLIの引数については以下。
+
+- `--css=bootstrap` : 今回はbootstrapを使う。使いたいcssによって適宜変え`て下さい。
+- `--skip-git` : .gitignoreはすでにあるもの使用すればいいのでskipで。
+- `--skip-jbuilder` : jsonで返す必要ないならいらない。必要になったら後で`入れる
+- `--skip-action`-mailbox : メール処理機能必要ないことのほうが多そう。
+- `--skip-action-mailer` : 同様。
+- `--skip-test` : rspec使う場合はtestをskip
+- `--skip-action-text` : ction textも必要なアプリ限られるはずなので一旦skip。
+
 
 ### 4. DBのセットアップ
 
