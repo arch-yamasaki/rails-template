@@ -13,7 +13,7 @@ localでRailsを立ち上げるテンプレ用Git Repositoryを作成した。
 3. docker上でのrailsのインストール
 4. DBのセットアップ
 
-### cloneする
+### 1. リポジトリをcloneする
 
 ```sh
 
@@ -23,7 +23,7 @@ cd rails-template
 ```
 
 
-### ファイルの編集
+### 2. 一部ファイルの編集
 
 
 - `Gemfile.sample`の名前を`Gemfile`に変更
@@ -43,23 +43,30 @@ cd rails-template
 ```
 
 
-### railsのセットアップ
+### 3. railsのセットアップ
 
 ```sh
 # イメージを作成
 docker-compose build
-# rails含む各種Gemをbundleでinstallする
-docker-compose run web rails new . --force  --skip-git --database=postgresql 
 
-# 他のinstall方法
-# docker-compose run web rails new . cat-hotwire --css=bootstrap --skip-jbuilder --skip-action-mailbox --skip-action-mailer --skip-test --skip-active-storage --skip-action-text --skip-git --database=postgresql
+# rails含む各種Gemをisntallする
+docker-compose run web rails new . <your_app_name> \
+  --database=postgresql \ # postgresqlを仕様
+  --skip-git \　# .gitignoreはすでにあるもの使用すればいいのでskipで。
+  --css=bootstrap \
+  --skip-jbuilder \ # jsonで返す必要ないならいらない。必要になったら後で入れる
+  --skip-action-mailbox \　# メール処理機能必要ないことのほうが多そう。
+  --skip-action-mailer \ # 同様。
+  --skip-test　\　# rspec使う場合はtestをskip
+  --skip-action-text # action textも必要なアプリ限られるはずなので一旦skip。
+
 
 # Gemfileが再作成されるのでbuildしなおす。
 docker-compose build
 
 ```
 
-### DBのセットアップ
+### 4. DBのセットアップ
 
 ```yml:database.yml
 default: &default
