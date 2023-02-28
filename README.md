@@ -52,8 +52,8 @@ docker-compose build
 # rails含む各種Gemをisntallする
 docker-compose run web rails new . <your_app_name> \
   --database=postgresql \ # postgresqlを仕様
+  --css=bootstrap \ # 今回はbootstrapを使う。使いたいcssによって適宜変えて下さい。
   --skip-git \　# .gitignoreはすでにあるもの使用すればいいのでskipで。
-  --css=bootstrap \
   --skip-jbuilder \ # jsonで返す必要ないならいらない。必要になったら後で入れる
   --skip-action-mailbox \　# メール処理機能必要ないことのほうが多そう。
   --skip-action-mailer \ # 同様。
